@@ -25,7 +25,18 @@ app.use((req, res, next) => {
 
 // Routes which should handle requests
 app.use("/products", productRoutes);
-app.use("/orders", orderRoutes);
+
+app.use("/orders/query", orderRoutes);
+
+app.use("/test/query", (req,res) =>{
+  let fullname = req.query.fullname;
+  let arr = fullname.split(' ');
+  let name = {
+    firstname : arr[0],
+    lastname : arr[1]
+  }
+  res.send(JSON.stringify(name))
+})
 
 app.use((req, res, next) => {
   const error = new Error("Not found");
