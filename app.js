@@ -28,6 +28,8 @@ app.use("/products", productRoutes);
 
 app.use("/orders/query", orderRoutes);
 
+
+// EdWisor assignment Rest apis 
 app.use("/test/query", (req,res) =>{
   let fullname = req.query.fullname;
   let arr = fullname.split(' ');
@@ -37,6 +39,34 @@ app.use("/test/query", (req,res) =>{
   }
   res.send(JSON.stringify(name))
 })
+
+app.use("/calculate/age/query", (req,res) => {
+   
+  let date = req.query.dob;
+  let arr = date.split('-');
+  let birthDate = [];
+  for(let i = 0; i<arr.length; i++){
+    birthDate.push(arr[i]);
+  }
+console.log("birhtdate"+ birthDate)
+
+function calculate_age(date) { 
+  var diff_ms = Date.now() - date.getTime();
+  var age_dt = new Date(diff_ms); 
+
+  return Math.abs(age_dt.getUTCFullYear() - 1970);
+}
+
+// console.log(calculate_age(new Date(1996, 5, 4)));
+
+let result = calculate_age(new Date(birthDate));
+console.log("from console log"+ result);
+res.send(JSON.stringify(result));
+})
+
+// edwisor apis ending
+
+
 
 app.use((req, res, next) => {
   const error = new Error("Not found");
